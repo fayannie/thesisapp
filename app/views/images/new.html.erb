@@ -1,0 +1,8 @@
+<h1>Image Upload</h1>
+
+<%= form_tag ({:action => 'create'}, :multipart => true) %>
+<p><label for="upload_file">Select File</label>:
+<%= file_field 'img','img' %></p>
+
+<%= submit_tag "upload" %>
+
