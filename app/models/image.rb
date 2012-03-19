@@ -2,6 +2,10 @@ require 'rubygems'
 require 'RMagick'
 
 class Image < ActiveRecord::Base
+
+ def to_param
+  title
+ end
  
  def img=(file)
    #upload image file to 'app/assets/images'
