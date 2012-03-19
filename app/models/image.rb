@@ -4,12 +4,13 @@ require 'RMagick'
 class Image < ActiveRecord::Base
 
  def to_param
-  title
+  "#{id}-#{title}"
  end
  
- def img=(file)
+ def image_file=(file)
    #upload image file to 'app/assets/images'
-   name = file.original_filename
+   filename = file.original_filename
+   name = filename.gsub(/[.]/,'-')
    data = file.read
    directory = 'app/assets/images/'
    path = File.join(directory,name)
@@ -22,5 +23,10 @@ class Image < ActiveRecord::Base
    resize_image = original_image.resize(width, height)
    #save resize image
    resize_image.write('app/assets/images/resize/'<<@title)
+  end
+
+  def after_destroy
+   File.delete("#{Rails.root}/app/assets/images/#{self.title}")
+   File.delete("#{Rails.root}/app/assets/images/resize/#{self.title}")
   end
 end

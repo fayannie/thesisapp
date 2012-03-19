@@ -7,7 +7,7 @@ class ImagesController < ApplicationController
  end
 
  def show
-    @image = Image.find_by_title(params[:id])
+    @image = Image.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -21,7 +21,7 @@ class ImagesController < ApplicationController
  end
  
  def create
-    @image = Image.new(params[:img])
+    @image = Image.new(params[:image_file])
     respond_to do |format|
       if @image.save
         format.html { redirect_to @image, :notice => 'Image was successfully uploaded and resized.' }
@@ -30,10 +30,9 @@ class ImagesController < ApplicationController
  end
 
  def destroy
-    @image = Image.find_by_title(params[:id])
+    @image = Image.find(params[:id])
     @image.destroy
-    File.delete("#{Rails.root}/app/assets/images/#{@image.title}")
-    File.delete("#{Rails.root}/app/assets/images/resize/#{@image.title}")
+    @image.after_destroy
     respond_to do |format|
       format.html { redirect_to images_url }
     end  
