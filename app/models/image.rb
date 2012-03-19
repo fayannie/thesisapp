@@ -2,9 +2,6 @@ require 'rubygems'
 require 'RMagick'
 
 class Image < ActiveRecord::Base
-
- #Image.set_primary_key "title"
- validates :title, :uniqueness => true
  
  def img=(file)
    #upload image file to 'app/assets/images'
