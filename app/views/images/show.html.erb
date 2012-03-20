@@ -1,8 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Image:</b>
-  <%= image_tag @image.title %>
+  <b>Resize image to 100*100:</b>
   <%= image_tag("#{'resize/'<<@image.title}") %>
 </p>
 <%= link_to 'Back', images_path %>

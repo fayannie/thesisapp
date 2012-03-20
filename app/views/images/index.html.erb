@@ -8,7 +8,7 @@
 <% @images.each do |image| %>
   <tr>
     <td><%= image.title %></td>
-    <td><%= link_to 'Show', image %></td>
+    <td><%= link_to 'Resize', image %></td>
     <td><%= link_to 'Destroy', image, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

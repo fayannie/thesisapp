@@ -7,24 +7,26 @@ class Image < ActiveRecord::Base
   "#{id}-#{title}"
  end
  
+ #upload image file to 'app/assets/images'
  def image_file=(file)
-   #upload image file to 'app/assets/images'
    filename = file.original_filename
    name = filename.gsub(/[.]/,'-')
    data = file.read
    directory = 'app/assets/images/'
    path = File.join(directory,name)
    File.open(path,"wb") { |f| f.write(data) }
-   
-   @title = self.title = name
-   #resize image  
+   self.title = name
+ end
+ 
+ #resize image 
+ def resize  
    width, height = 100, 100
-   original_image = Magick::Image.read(directory<<@title).first
+   @title = self.title
+   original_image = Magick::Image.read('app/assets/images/'<<@title).first
    resize_image = original_image.resize(width, height)
-   #save resize image
    resize_image.write('app/assets/images/resize/'<<@title)
-  end
-
+ end
+  
   def after_destroy
    File.delete("#{Rails.root}/app/assets/images/#{self.title}")
    File.delete("#{Rails.root}/app/assets/images/resize/#{self.title}")
